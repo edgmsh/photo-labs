@@ -3,7 +3,7 @@ import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
-  const { username, imageSource, id, like, location, profile } = props.photo;
+  const { username, imageSource, id, like, city, country, profile } = props;
 
   const clickHandler = () => {
     setCounter(prev => prev + 1);
@@ -20,7 +20,7 @@ const PhotoListItem = (props) => {
         <div className='photo-list--user-info'>
           <span className="photo-list--username">{username}</span>
           <div className="photo-list--user-location">
-            {location.city}, {location.country}
+            {city}, {country}
           </div>
         </div>
       </div>
