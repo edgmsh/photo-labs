@@ -6,7 +6,6 @@ const PhotoListItem = (props) => {
   const { username, imageSource, id, like, city, country, profile } = props;
 
   const clickHandler = () => {
-    setCounter(prev => prev + 1);
   };
 
   return (
