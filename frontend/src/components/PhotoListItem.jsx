@@ -3,12 +3,10 @@ import "../styles/PhotoListItem.scss";
 import PhotoFavButton from "./PhotoFavButton";
 
 const PhotoListItem = (props) => {
-
-  const { id, like, location, imageSource, username, profile } = props.photo;
+  const { username, imageSource, id, like, location, profile } = props.photo;
 
   const clickHandler = () => {
-   // toggleModalState();
-  //  clickImgSetID(id);
+    setCounter(prev => prev + 1);
   };
 
   return (
@@ -20,7 +18,7 @@ const PhotoListItem = (props) => {
       <div className='photo-list--user-details'>
         <img className="photo-list--user-profile" src={profile} />
         <div className='photo-list--user-info'>
-        <span className="photo-list--username">{username}</span><br/>
+          <span className="photo-list--username">{username}</span>
           <div className="photo-list--user-location">
             {location.city}, {location.country}
           </div>
