@@ -2,6 +2,8 @@ import React from 'react';
 import '../styles/HomeRoute.scss';
 import TopNavigationBar from '../components/TopNavigationBar';
 import PhotoList from '../components/PhotoList';
+import PhotoData from '../mocks/photos.js';
+import TopicData from '../mocks/topics.js';
 
 function HomeRoute(props) {
 
