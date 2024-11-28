@@ -28,7 +28,7 @@ const TopicList = (props) => {
   });
 
   return (
-    <div className="top-nav-bar--topic-list">
+    <div className="top-nav-bar-topic-list">
       {mappedTopics}
     </div>
   );
