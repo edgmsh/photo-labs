@@ -10,11 +10,15 @@
   height: 72px;
 }
 
-.top-nav-bar__logo {
+.top-nav-bar--logo {
   text-decoration: overline;
   font-weight: 500;
   font-size: 24px;
   color: #111;
   text-underline-position: auto;
   margin-left: 24px;
+
+  &:hover {
+    cursor: pointer;
+  }
 }

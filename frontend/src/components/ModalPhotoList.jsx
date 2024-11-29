@@ -1,20 +1,20 @@
-import React from "react";
-import PhotoListItem from './PhotoListItem';
-import "../styles/PhotoList.scss";
+import React from 'react';
 
-const PhotoList = (props) => {
+import ModalPhotoListItem from './ModalPhotoListItem';
 
-  const { photos, like, toggleModalState, clickImgSetID } = props;
+import '../styles/PhotoList.scss';
+
+const ModalPhotoList = (props) => {
+
+  const { photos, like } = props;
 
   const mappedPhotos = photos.map(photo => {
     return (
-      <PhotoListItem username={photo.user.name}
+      <ModalPhotoListItem username={photo.user.name}
         imageSource={photo.urls.regular}
         key={photo.id}
         id={photo.id}
         like={like}
-        toggleModalState={toggleModalState}
-        clickImgSetID={clickImgSetID}
         hideUserName={photo.hideUserName}
         city={photo.location.city}
         country={photo.location.country}
@@ -30,4 +30,5 @@ const PhotoList = (props) => {
   );
 };
 
-export default PhotoList;
+
+export default ModalPhotoList;
