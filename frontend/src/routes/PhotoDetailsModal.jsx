@@ -34,7 +34,7 @@ export const PhotoDetailsModal = (props) => {
 
   return (
     <div className='photo-details-modal'>
-      <button className='photo-details-modal--close-button'
+      <button className='photo-details-modal__close-button'
         onClick={closeModal}>
         <svg width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
           <g clipPath="url(#clip0_428_287)">
