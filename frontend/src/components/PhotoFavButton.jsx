@@ -14,8 +14,8 @@ function PhotoFavButton(props) {
   };
 
   return (
-    <div className="photo-list--fav-icon" onClick={clickHandler}>
-      <div className="photo-list--fav-icon-svg">
+    <div className="photo-list__fav-icon" onClick={clickHandler}>
+      <div className="photo-list__fav-icon-svg">
         <FavIcon fill={heartStat ? "red" : "white"} />
       </div>
     </div>

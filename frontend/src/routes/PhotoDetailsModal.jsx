@@ -17,12 +17,12 @@ export const PhotoDetailsModal = (props) => {
     return (
       <div className="card">
         <PhotoFavButton like={like} photo_id={clickedImageInfo[0].id} />
-        <img src={clickedImageInfo[0].urls.full} />
-        <div className='photo-list--user-details'>
-        <img className="photo-list--user-profile" src={clickedImageInfo[0].user.profile} />
-          <div className='photo-list--user-info'>
+        <img src={clickedImageInfo[0].urls.full} alt="Photo" className="photo-details-modal__image"/>
+        <div className='photo-details-modal__photographer-details'>
+        <img alt="Profile" className="photo-details-modal__photographer-profile" src={clickedImageInfo[0].user.profile} />
+          <div className='photo-details-modal__photographer-info'>
             <span>{clickedImageInfo[0].user.name}</span>
-            <div className="photo-list--user-location">
+            <div className="photo-details-modal__photographer-location">
               {clickedImageInfo[0].location.city}, {clickedImageInfo[0].location.country}
             </div>
           </div>
