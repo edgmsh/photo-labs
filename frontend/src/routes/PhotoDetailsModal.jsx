@@ -6,7 +6,7 @@ import PhotoList from 'components/PhotoList';
 import PhotoFavButton from 'components/PhotoFavButton';
 
 const PhotoDetailsModal = (props) => {
-  // console.log('>>>>>>>>', props.singlePhotoDetail); // this will be logged twice due to <React.StrictMode> in index.jsx
+  // console.log('-----> ', props.singlePhotoDetail); 
   return (
     <div className='photo-details-modal'>
       <button
