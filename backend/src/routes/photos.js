@@ -12,8 +12,6 @@ module.exports = () => {
     if (host === 'localhost') {
       serverUrl = `${protocol}://${host}:${port}`;
     }
-    //console.log(photos);
-   // return response.json(photos(serverUrl));
    return response.json(photos);
   });
 
