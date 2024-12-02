@@ -44,7 +44,6 @@ const reducer = (state, action) => {
 const useApplicationData = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  // Used to be toggleFavourite
   const updateToFavPhotoIds = (photoId) => {
     if (state.favourites.includes(photoId)) {
       const copyOfFavourites = [...state.favourites].filter(favPhotoId => favPhotoId !== photoId);
@@ -62,7 +61,6 @@ const useApplicationData = () => {
     dispatch({ type: ACTIONS.CLOSE_MODAL, payload: value });
   };
 
-  // Uses the same action as setting photos, no need to create a new one
   const onTopicSelect = (id) => {
     fetch(`/api/topics/photos/${id}`)
       .then((response) => response.json())
