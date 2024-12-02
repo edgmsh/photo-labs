@@ -1,22 +1,24 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TopNavigation from 'components/TopNavigationBar';
+import PhotoList from 'components/PhotoList';
 import '../styles/HomeRoute.scss';
-import TopNavigationBar from '../components/TopNavigationBar';
-import PhotoList from '../components/PhotoList';
 
-
-function HomeRoute(props) {
-
-  const {favPhotoExist, like, toggleModalState, PhotoData, clickImgSetID, TopicData, selectTopic} = props;
-
+const HomeRoute = (props) => {
   return (
-    <div className="home-route">
-      <TopNavigationBar favPhotoExist={favPhotoExist} TopicData={TopicData} selectTopic={selectTopic} />
-      <PhotoList photos={PhotoData} 
-      like={like} 
-      toggleModalState={toggleModalState}
-      clickImgSetID={clickImgSetID} />
+    <div className='home-route'>
+      <TopNavigation
+        topics={props.topics}
+        isFavPhotoExist={props.favourites.length > 0}
+        onTopicSelect={props.onTopicSelect}
+      />
+      <PhotoList
+        photos={props.photos}
+        favourites={props.favourites}
+        toggleFavourite={props.toggleFavourite}
+        setDisplayModal={props.setDisplayModal}
+      />
     </div>
   );
-}
+};
 
 export default HomeRoute;

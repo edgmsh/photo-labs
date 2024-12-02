@@ -1,71 +1,92 @@
-import React, {useState} from 'react';
+import { useReducer, useEffect } from "react";
+import mockPhotoData from 'mocks/photos';
+import mockTopicData from 'mocks/topics';
 
-function useApplicationData() {
-/*
+
+const initialState = {
+  displayModal: false,
+  favourites: [],
+  topicData: mockTopicData,//[],
+  photoData: mockPhotoData//[]
+};
+
 export const ACTIONS = {
   FAV_PHOTO_ADDED: 'FAV_PHOTO_ADDED',
   FAV_PHOTO_REMOVED: 'FAV_PHOTO_REMOVED',
   SET_PHOTO_DATA: 'SET_PHOTO_DATA',
   SET_TOPIC_DATA: 'SET_TOPIC_DATA',
   SELECT_PHOTO: 'SELECT_PHOTO',
-  DISPLAY_PHOTO_DETAILS: 'DISPLAY_PHOTO_DETAILS'
-}
-*/
-  const [likedPhotos, setLikedPhotos] = useState([]);
-  const [favPhotoExist, setFavPhotoExist] = useState(false);
-  const [modalState, setModalState] = useState(false);
-  const [clickedImgID, setClickedImgID] = useState("");
+  CLOSE_MODAL: 'CLOSE_MODAL'
+};
 
-  const like = (id) => {
-    let newArr;
-    if (likedPhotos.includes(id)) {
-      newArr = likedPhotos.filter(p => p !== id);
-    } else {
-      newArr = [...likedPhotos, id];
+const reducer = (state, action) => {
+  switch (action.type) {
+    case ACTIONS.SET_PHOTO_DATA:
+      return { ...state, photoData: action.payload };
+    case ACTIONS.SET_TOPIC_DATA:
+      return { ...state, topicData: action.payload };
+    case ACTIONS.FAV_PHOTO_ADDED:
+      return { ...state, favourites: [...state.favourites, action.payload] };
+    case ACTIONS.FAV_PHOTO_REMOVED:
+      return { ...state, favourites: [...action.payload] };
+    case ACTIONS.SELECT_PHOTO:
+      return { ...state, displayModal: action.payload };
+    case ACTIONS.CLOSE_MODAL:
+      return { ...state, displayModal: action.payload };
+    default:
+      throw new Error(
+        `Tried to reduce with unsupported action type: ${action.type}`
+      );
+  }
+};
+
+
+const useApplicationData = () => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  // Used to be toggleFavourite
+  const updateToFavPhotoIds = (photoId) => {
+    if (state.favourites.includes(photoId)) {
+      const copyOfFavourites = [...state.favourites].filter(favPhotoId => favPhotoId !== photoId);
+      dispatch({ type: ACTIONS.FAV_PHOTO_REMOVED, payload: copyOfFavourites });
+      return;
     }
-    setLikedPhotos(newArr);
-    setFavPhotoExist(newArr.length > 0 ? true : false);
+    dispatch({ type: ACTIONS.FAV_PHOTO_ADDED, payload: photoId });
   };
 
-  const toggleModalState = () => {
-    setModalState(true);
-  }
-
-  const closeModal = () => {
-    setModalState(false);
-  }
-
-  const clickImgSetID = (id) => {
-    setClickedImgID(id);
-  }
-
-  const object = {
-    favPhotoExist,
-    like, //updateToFavPhotoIds
-    toggleModalState,
-    modalState,
-    closeModal,
-    clickImgSetID,
-    clickedImgID
-  }
-/*
-  const appInitialState = {
-    favPhotoIds: [],
-    selectedPhoto: {},
-    photos: [],
-    topics: [],
-    selectedPhoto: {},
-    displayPhotoDetails: false
+  const setPhotoSelected = (photoDetails) => {
+    dispatch({ type: ACTIONS.SELECT_PHOTO, payload: photoDetails });
   };
+
+  const onClosePhotoDetailsModal = (value) => {
+    dispatch({ type: ACTIONS.CLOSE_MODAL, payload: value });
+  };
+
+  // Uses the same action as setting photos, no need to create a new one
+  const onTopicSelect = (id) => {
+    fetch(`/api/topics/photos/${id}`)
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data }));
+  };
+
+  useEffect(() => {
+    fetch("/api/photos")
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_PHOTO_DATA, payload: data }));
+  }, []);
+  useEffect(() => {
+    fetch("/api/topics")
+      .then((response) => response.json())
+      .then((data) => dispatch({ type: ACTIONS.SET_TOPIC_DATA, payload: data }));
+  }, []);
+
   return {
     state,
-    onPhotoSelect,
-    onLoadTopic,
     updateToFavPhotoIds,
     onClosePhotoDetailsModal,
+    setPhotoSelected,
+    onTopicSelect
   };
-*/
-  return object;
-}
+};
 
 export default useApplicationData;

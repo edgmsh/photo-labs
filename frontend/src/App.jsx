@@ -1,50 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './App.scss';
-import HomeRoute from './routes/HomeRoute';
-import PhotoData from './mocks/photos.js';
-import TopicsData from './mocks/topics.js';
-import PhotoDetailsModal from './routes/PhotoDetailsModal';
-import useApplicationData from './hooks/useApplicationData';
-
-
+import useApplicationData from 'hooks/useApplicationData';
+import HomeRoute from 'routes/HomeRoute';
+// import mockPhotoData from 'mocks/photos';
+// import mockTopicData from 'mocks/topics';
+import PhotoDetailsModal from 'routes/PhotoDetailsModal';
 
 const App = () => {
-
-  const [topics, setTopics] = useState([]);
-  const [photos, setPhotos] = useState([]);
-  const [selectedTopic, setSelectedTopic] = useState(null);
-
   const {
-    favPhotoExist,
-    like,
-    toggleModalState,
-    modalState,
-    closeModal,
-    clickImgSetID,
-    clickedImgID
+    state,
+    updateToFavPhotoIds,
+    onClosePhotoDetailsModal,
+    setPhotoSelected,
+    onTopicSelect,
   } = useApplicationData();
 
-  const selectTopic = (id) => {
-    setSelectedTopic(id);
-  };
-
   return (
-  <div className="App">
-  <HomeRoute
-    favPhotoExist={favPhotoExist}
-    like={like}
-    toggleModalState={toggleModalState}
-    PhotoData={PhotoData}
-    clickImgSetID={clickImgSetID}
-    TopicData={TopicsData}
-    selectTopic={selectTopic} />
-  {modalState && <PhotoDetailsModal closeModal={closeModal}
-    PhotoData={PhotoData}
-    like={like}
-    toggleModalState={toggleModalState}
-    clickedImgID={clickedImgID}
-    clickImgSetID />}
-  </div>
+    <div className='App'>
+      <HomeRoute
+        onTopicSelect={onTopicSelect}
+        photos={state.photoData}
+        topics={state.topicData}
+        setDisplayModal={setPhotoSelected}
+        favourites={state.favourites}
+        toggleFavourite={updateToFavPhotoIds}
+      />
+      {state.displayModal && (
+        <PhotoDetailsModal
+          closeDisplayModal={onClosePhotoDetailsModal}
+          singlePhotoDetail={state.displayModal}
+          toggleFavourite={updateToFavPhotoIds}
+          favourites={state.favourites}
+        />
+      )}
+    </div>
   );
 };
 

@@ -1,59 +1,55 @@
 import React from 'react';
 
 import '../styles/PhotoDetailsModal.scss';
-import ModalPhotoList from '../components/ModalPhotoList';
-import PhotoFavButton from '../components/PhotoFavButton';
+import closeSymbol from '../assets/closeSymbol.svg';
+import PhotoList from 'components/PhotoList';
+import PhotoFavButton from 'components/PhotoFavButton';
 
-export const PhotoDetailsModal = (props) => {
-
-  const { closeModal, like, PhotoData, clickedImgID } = props;
-  console.log(PhotoData);
-  console.log("hello", clickedImgID);
-  console.log(PhotoData[0].id);
-
-  const displayOneImg = () => {
-
-    const clickedImageInfo = PhotoData.filter(photo => photo.id === clickedImgID);
-    return (
-      <div className="card">
-        <PhotoFavButton like={like} photo_id={clickedImageInfo[0].id} />
-        <img src={clickedImageInfo[0].urls.full} alt="Photo" className="photo-details-modal__image"/>
+const PhotoDetailsModal = (props) => {
+  // console.log('>>>>>>>>', props.singlePhotoDetail); // this will be logged twice due to <React.StrictMode> in index.jsx
+  return (
+    <div className='photo-details-modal'>
+      <button
+        className='photo-details-modal__close-button'
+        onClick={() => props.closeDisplayModal(false)}
+      >
+        <img src={closeSymbol} alt='close symbol' />
+      </button>
+      <div className='photo-details-modal__images'>
+        <PhotoFavButton
+          toggleFavourite={props.toggleFavourite}
+          photoId={props.singlePhotoDetail.id}
+          favourites={props.favourites}
+        />
+        <img
+          // onClick={() => props.setDisplayModal(props.singlePhotoDetail)}
+          className='photo-details-modal__image'
+          src={props.singlePhotoDetail.urls.full}
+        />
         <div className='photo-details-modal__photographer-details'>
-        <img alt="Profile" className="photo-details-modal__photographer-profile" src={clickedImageInfo[0].user.profile} />
+          <img
+            className='photo-details-modal__photographer-profile'
+            src={props.singlePhotoDetail.user.profile}
+          />
           <div className='photo-details-modal__photographer-info'>
-            <span>{clickedImageInfo[0].user.name}</span>
-            <div className="photo-details-modal__photographer-location">
-              {clickedImageInfo[0].location.city}, {clickedImageInfo[0].location.country}
+            {props.singlePhotoDetail.user.name}
+            <div className='photo-details-modal__photographer-location'>
+              {props.singlePhotoDetail.location.city},
+              {props.singlePhotoDetail.location.country}
             </div>
           </div>
         </div>
+        <div className='photo-details-modal__header'>Similar Photos</div>
+        <div className='photo-details-modal__images'>
+          {
+            <PhotoList
+              photos={Object.values(props.singlePhotoDetail.similar_photos)}
+              favourites={props.favourites}
+              toggleFavourite={props.toggleFavourite}
+            />
+          }
+        </div>
       </div>
-    );
-
-  };
-
-  return (
-    <div className='photo-details-modal'>
-      <button className='photo-details-modal__close-button'
-        onClick={closeModal}>
-        <svg width="24" height="24" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <g clipPath="url(#clip0_428_287)">
-            <path d="M14.0625 3.9375L3.9375 14.0625" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-            <path d="M14.0625 14.0625L3.9375 3.9375" stroke="black" strokeLinecap="round" strokeLinejoin="round" />
-          </g>
-          <defs>
-            <clipPath id="clip0_428_287">
-              <rect width="18" height="18" fill="white" />
-            </clipPath>
-          </defs>
-        </svg>
-      </button>
-
-      {displayOneImg()}
-
-      <span>Similar Photos:</span>
-
-      <ModalPhotoList photos={PhotoData} like={like} />
     </div>
   );
 };
