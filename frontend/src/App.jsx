@@ -11,6 +11,7 @@ const App = () => {
     onClosePhotoDetailsModal,
     setPhotoSelected,
     onTopicSelect,
+    onSearch,
   } = useApplicationData();
 
   return (
