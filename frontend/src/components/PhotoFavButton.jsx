@@ -10,8 +10,8 @@ function PhotoFavButton(props) {
   const colorCheck = props.favourites.includes(props.photoId);
 
   return (
-    <div onClick={toggleFavouritePhoto} className='photo-list__fav-icon'>
-      <div className='photo-list__fav-icon-svg'>
+    <div onClick={toggleFavouritePhoto} className='photo-list--fav-icon'>
+      <div className='photo-list--fav-icon-svg'>
         <FavIcon selected={colorCheck} />
       </div>
     </div>
