@@ -1,6 +1,4 @@
 import { useReducer, useEffect } from "react";
-//import mockPhotoData from 'mocks/photos';
-//import mockTopicData from 'mocks/topics';
 
 
 const initialState = {
